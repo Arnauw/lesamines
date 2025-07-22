@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bien ou bien ?{% endblock %}
+
+{# We add a <style> block to hold our new custom class #}
+{% block head %}
+    <style>
+        .card-img-fixed {
+            /* This is the fixed height for all your images. Adjust as you like! */
+            height: 200px;
+
+            /* This is the magic property! It tells the image to:
+               - Maintain its aspect ratio (no stretching)
+               - Fill the entire space (the 200px height and 100% width)
+               - Crop any excess from the top/bottom or sides to fit
+            */
+            object-fit: cover;
+        }
+    </style>
+{% endblock %}
+
+
+{% block body %}
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Les Amines ❤️</h1>
+            <a href="{{ path('create') }}" class="btn btn-success">Ajouter un Amine</a>
+        </div>
+
+        <div class="row g-4">
+            {% for user in users %}
+                <div class="col-lg-4 col-md-6">
+                    <div class="card">
+                        {% set my_string = 'https://i.pravatar.cc/150?u=a042581f4e29026704z' %}
+
+                        <img src="{{ my_string|slice(0, -1) ~ random('abcdefghijklmnopqrstuvwxyz0123456789') }}" class="card-img card-img mx-auto d-block mt-3" alt="Image of Amine">
+
+                        <div class="card-body">
+                            <p class="card-text">{{ user.firstname }}</p>
+                            <p class="card-text">{{ user.lastname }}</p>
+                            <p class="card-text">{{ user.email }}</p>
+
+                            <div>
+                                <a href="{{ path('update', {'id': user.id}) }}" class="btn btn-warning">Edit</a>
+                                <a href="{{ path('delete', {'id': user.id}) }}" class="btn btn-danger">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
